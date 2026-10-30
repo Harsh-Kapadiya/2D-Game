@@ -11,6 +11,9 @@ wrapper class
 #include<SFML/System.hpp>
 #include<SFML/Audio.hpp>
 #include<SFML/Network.hpp>
+using namespace sf;
+using namespace std;
+
 
 class Game
 {
@@ -21,10 +24,18 @@ private:
 	//windows
 	RenderWindow* window; // pointer to the window object
 	VideoMode videoMode;
-	Event ev; // event object to handle the events of the game
+	// Event ev; // event object to handle the events of the game
 
+	// Game objects
+	RectangleShape enemy;
+
+
+	//Private functions
 	void initVariable();
 	void initWindow();
+	void initEnemies();
+
+
 
 
 
@@ -40,9 +51,7 @@ public:
 
 	// Accessor
 	const bool running() const;
-	const bool Game :: running() const {
-		return this->window->isOpen();
-	}
+	
 
 
 
@@ -50,6 +59,22 @@ public:
 	// function
 	void pollEvents();
 	void update();
-	void render();
-		
+	void render()
+	{
+		/*
+		@return void
+		- clear old frame
+		- render objects
+		- Display frame in window
+		Render the game objects
+		*/
+		this->window->clear(); // clear old frames // 1. color::blue give the game frame to a blue color i wanna any specific color then i can use the color rgb code)
+
+
+		//Draw game objects
+		this->window->draw(this->enemy);
+
+		this->window->display(); // display the rendered frame
+	}
+
 };

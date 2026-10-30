@@ -15,3 +15,6 @@ this line is not required to write in the main file as well write this in the ga
 		//window.clear(Color::Blue); // clear old frames // 1. color::blue give the game frame to a blue color i wanna any specific color then i can use the color rgb code
 
 window.display(); // tell app that windows done drawing 
+
+
+in winodw.clear() black is the default color

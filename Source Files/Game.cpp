@@ -1,4 +1,6 @@
 #include "Game.h"
+using namespace sf;
+using namespace std;
 
 // Private functions
 void Game::initVariable()
@@ -9,32 +11,42 @@ void Game::initVariable()
 
 void Game::initWindow()
 {
-	this->videoMode.height = 900;
-	this->videoMode.width = 1000;
+	this->videoMode.size = { 1000, 800 }; // this is the default resolution of the game window
 	// this give use the current resolution of the desktop and set it to my game window
 	// this si used to make the game more dynamic
 	// this->videoMode.getDesktopMode(); 
-	this ->window = new RenderWindow(this->videoMode,"My Game 1", Style::Titlebar | Style::Close | Style::Resize);
+	this->window = new RenderWindow(this->videoMode, "My Game 1", Style::Titlebar | Style::Close | Style::Resize);
+
+	this->window->setFramerateLimit(144);
+
 }
 
-as
+void Game::initEnemies()
+{
+	// this->enemy.setPosition();  // the default position is (0,0)
+	this->enemy.setSize(Vector2f(100.f, 100.f));
+	this->enemy.setFillColor(Color::Cyan);
+	this->enemy.setOutlineColor(Color::Green);
+	this->enemy.setOutlineThickness(1.f);
+}
+
 // constructor/ destructor
 
 Game::Game()
 {
 	this->initVariable();
 	this->initWindow();
+	this->initEnemies();
 }
 Game::~Game()
 {
-	 delete this->window;
+	delete this->window;
 
 }
 
 
 //accessor
-const bool Game::running() const
-{
+const bool Game::running() const {
 	return this->window->isOpen();
 }
 
@@ -49,17 +61,17 @@ void Game::pollEvents()
 {
 
 	// Event pooling
-	while (this->window->pollEvent(this->ev))  // SFML 3: pollEvent() gives the next event, or nothing when there are no more events
+	while (const std::optional<Event> event = this->window->pollEvent())  // SFML 3: pollEvent() gives the next event, or nothing when there are no more events
 	{
-		if (this->ev.is<Event::Closed>()) // event is called when we closed he windows
+		if (event->is<Event::Closed>()) // event is called when we closed he windows
 		{
 			this->window->close();
 		}
-		else if (const auto* key = ev->getIf<Event::KeyPressed>()) // event trigger when any key is pressed on the keyboard
+		else if (const auto* key = event->getIf<Event::KeyPressed>()) // event trigger when any key is pressed on the keyboard
 		{
 			if (key->code == Keyboard::Key::Escape)  // check whether the escape key is pressed or not if yes then close the window
 			{
-				window.close();
+				this->window->close();
 			}
 		}
 	}
@@ -68,23 +80,4 @@ void Game::pollEvents()
 void Game::update()
 {
 	this->pollEvents();
-}
-
-void Game::render()
-{
-	/*
-	   @return void
-				- clear old frame
-				- render objects
-				- Display frame in window
-		Render the game objects
-	*/
-	this->window->clear(Color::Blue); // clear old frames // 1. color::blue give the game frame to a blue color i wanna any specific color then i can use the color rgb code)
-	
-	
-	//Drwa game objects
-
-
-
-	this->window->display(); // display the rendered frame
 }

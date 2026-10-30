@@ -14,7 +14,7 @@ int main() {
 	//game loop is always a while loop but the loop is not gonna be true as we also wanna quit the game so
 	while (game.running()) // check whether my game windows is still open or not
 	{
-		
+
 		//Update the game
 		game.update();
 
